@@ -19,4 +19,10 @@ public class TestController {
 
         return ResponseEntity.ok("Name: " + name);
     }
+    @GetMapping("/dog/color")
+    public ResponseEntity<?> dogColor(){
+        LOG.info("Test Controller - Always black!");
+
+        return ResponseEntity.ok("Always black!");
+    }
 }
