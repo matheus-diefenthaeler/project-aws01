@@ -33,7 +33,7 @@ configurations {
 
 bootJar {
     baseName = 'aws_project01'
-    version = '1.1.1'
+    version = '1.2.0'
 }
 
 task unpack(type: Copy) {
@@ -58,6 +58,8 @@ dependencies {
     compileOnly 'org.projectlombok:lombok'
     annotationProcessor 'org.projectlombok:lombok'
     implementation 'org.springframework.boot:spring-boot-starter-actuator'
+
+    implementation group: 'com.amazonaws', name: 'aws-java-sdk-sns', version: '1.12.326'
 
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     implementation group: 'org.mariadb.jdbc', name: 'mariadb-java-client', version: '3.0.8'
