@@ -1,7 +1,9 @@
 package br.com.diefenthaeler.matheus.aws_project01.controller;
 
+import br.com.diefenthaeler.matheus.aws_project01.enums.EventType;
 import br.com.diefenthaeler.matheus.aws_project01.model.Product;
 import br.com.diefenthaeler.matheus.aws_project01.repository.ProductRepository;
+import br.com.diefenthaeler.matheus.aws_project01.service.ProductPublisherService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,6 +17,8 @@ import java.util.Optional;
 public class ProductController {
 
     private final ProductRepository repository;
+
+    private final ProductPublisherService productPublisherService;
 
     @GetMapping
     public ResponseEntity<Iterable<Product>> findAll() {
@@ -33,6 +37,8 @@ public class ProductController {
     public ResponseEntity<Product> saveProduct(@RequestBody Product product) {
         Product productCreated = repository.save(product);
 
+        productPublisherService.publishProductEvent(productCreated, EventType.PRODUCT_CREATED, "matheus");
+
         return new ResponseEntity<Product>(productCreated, HttpStatus.CREATED);
     }
 
@@ -43,6 +49,9 @@ public class ProductController {
             product.setId(id);
 
             Product productUpdated = repository.save(product);
+
+            productPublisherService.publishProductEvent(productUpdated, EventType.PRODUCT_UPDATED, "lucas");
+
 
             return new ResponseEntity<Product>(productUpdated, HttpStatus.OK);
         }
@@ -57,6 +66,9 @@ public class ProductController {
             Product product = optionalProduct.get();
 
             repository.delete(product);
+
+            productPublisherService.publishProductEvent(product, EventType.PRODUCT_DELETED, "marcelo");
+
 
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
