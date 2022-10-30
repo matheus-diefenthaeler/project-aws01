@@ -35,7 +35,7 @@ public class ProductPublisherService {
 
         ProductEvent productEvent = new ProductEvent();
         productEvent.setProductId(product.getId());
-        productEvent.setCode(productEvent.getCode());
+        productEvent.setCode(product.getCode());
         productEvent.setUsername(username);
 
         Envelope envelope = new Envelope();
