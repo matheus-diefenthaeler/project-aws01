@@ -50,7 +50,7 @@ public class ProductPublisherService {
             log.info("Product event sent - Event: {} - Productid: {} - MessageId: {} ",
                     envelope.getEventType(),
                     productEvent.getProductId(),
-            publish.getMessageId());
+                    publish.getMessageId());
 
 
         } catch (JsonProcessingException e) {
