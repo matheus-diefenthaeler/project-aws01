@@ -1,10 +1,11 @@
-package br.com.diefenthaeler.matheus.aws_project01.config;
+package br.com.diefenthaeler.matheus.aws_project01.config.local;
 
 import com.amazon.sqs.javamessaging.ProviderConfiguration;
 import com.amazon.sqs.javamessaging.SQSConnectionFactory;
 import com.amazonaws.auth.DefaultAWSCredentialsProviderChain;
-import com.amazonaws.services.sqs.AmazonSQSClientBuilder;
-import org.springframework.beans.factory.annotation.Value;
+import com.amazonaws.client.builder.AwsClientBuilder;
+import com.amazonaws.regions.Regions;
+import com.amazonaws.services.sqs.AmazonSQSClient;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
@@ -16,11 +17,8 @@ import javax.jms.Session;
 
 @Configuration
 @EnableJms
-@Profile("!local")
-public class JmsConfig {
-
-    @Value("${aws.region}")
-    private String awsRegion;
+@Profile("local")
+public class JmsConfigLocal {
 
     private SQSConnectionFactory sqsConnectionFactory;
 
@@ -28,8 +26,10 @@ public class JmsConfig {
     public DefaultJmsListenerContainerFactory jmsListenerContainerFactory() {
         sqsConnectionFactory = new SQSConnectionFactory(
                 new ProviderConfiguration(),
-                AmazonSQSClientBuilder.standard()
-                        .withRegion(awsRegion)
+                AmazonSQSClient.builder()
+                        .withEndpointConfiguration(
+                                new AwsClientBuilder.EndpointConfiguration("http://localhost:4566",
+                                        Regions.US_EAST_1.getName()))
                         .withCredentials(new DefaultAWSCredentialsProviderChain())
                         .build());
 
