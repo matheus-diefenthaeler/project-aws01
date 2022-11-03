@@ -60,6 +60,7 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-actuator'
 
     implementation group: 'com.amazonaws', name: 'aws-java-sdk-sns', version: '1.12.326'
+    implementation group: 'com.amazonaws', name: 'aws-java-sdk-s3', version: '1.11.887'
 
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     implementation group: 'org.mariadb.jdbc', name: 'mariadb-java-client', version: '3.0.8'
